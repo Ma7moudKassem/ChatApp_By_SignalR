@@ -1,0 +1,27 @@
+﻿@page "/chat";
+
+<h1>Welcome in my chat app</h1>
+<hr />
+
+@if (!isConnected)
+{
+    <input class="form-control" @bind="@userName" placeholder="Enter your name" />
+    <button class="btn btn-primary form-control-append" @onclick="@Connect">Lets GO!</button>
+}
+else
+{
+    <div id="scrollbox">
+        <div class="alert alert-info">You are online now</div>
+        @foreach (var message in messages)
+        {
+            <div class="@message.CSS">
+                <div class="user">@message.UserName</div>
+                <div class="msg">@message.Subject</div>
+                <div class="date">@message.DateTime</div>
+            </div>
+        }
+        <hr />
+        <input class="form-control" placeholder="Enter a Message" @bind="@newMessage"></input>
+        <button class="btn btn-success form-control-append" @onclick="@(() => SendAsync(newMessage))">Send</button>
+    </div>
+}
